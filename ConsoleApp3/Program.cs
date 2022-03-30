@@ -82,7 +82,7 @@ namespace ConsoleApp3
                     goodNode = current;
                 }
                 current = current.Next;
-                
+
             }
             return goodNode;
         }
@@ -151,11 +151,11 @@ namespace ConsoleApp3
                 return;
             }
             Node temp = new Node(item);
-            
+
             Node cur = Head;
-            while(cur.Next != null)
+            while (cur.Next != null)
             {
-                if(cur.Next == node)
+                if (cur.Next == node)
                 {
                     temp.Next = cur.Next;
                     cur.Next = temp;
@@ -174,13 +174,13 @@ namespace ConsoleApp3
         }
         public void RemoveFirst()
         {
-            if (count == 0)
+            if (count != 0)
             {
-                throw new Exception("Список пуст");
+                Head = Head.Next;
+                count--;
             }
 
-            Head = Head.Next;
-            count--;
+
         }
         public void RemoveLast()
         {
@@ -233,14 +233,16 @@ namespace ConsoleApp3
         public bool Remove(int item)
         {
             Node cur = Head;
-            if(cur.Value == item)
+            if (count == 0) return false;
+            if (cur.Value == item)
             {
-                RemoveFirst();
+                Head = Head.Next;
+                count--;
                 return true;
             }
             while (cur.Next != null)
             {
-                if(cur.Next.Value == item)
+                if (cur.Next.Value == item)
                 {
                     cur.Next = cur.Next.Next;
                     count--;
@@ -264,6 +266,37 @@ namespace ConsoleApp3
             while (Remove(item)) { c++; }
             return c;
         }
+        //public void Reverse()
+        //{
+        //    var stack = new Stack<Node>();
+        //    while(count > 0)
+        //    {
+        //        stack.Push(Head);
+        //        RemoveFirst();
+        //    }
+        //    var cur = stack.Pop();
+        //    Head = cur;
+        //    while(stack.Count > 0)
+        //    {
+        //        var temp = stack.Pop();
+        //        cur.Next = temp;
+        //        cur = temp;
+        //    }
+        //    cur.Next = null;
+        //}
+
+        public  void Reverse()
+        {
+            var next = Head.Next;
+            Head.Next = null;
+            var prev = Head;
+            
+            for (int i = 1; i < count; i++)
+            {
+                var cur = prev.Next;
+                
+            }
+        }
 
     }
     class Program
@@ -273,11 +306,11 @@ namespace ConsoleApp3
             SinglyLinkedList hmm = new SinglyLinkedList();
             for (int i = 0; i < 10; i++)
             {
-                hmm.PushBack(i % 5);
+                hmm.PushBack(i);
             }
             Console.WriteLine(hmm.Print());
-            
-            hmm.RemoveLast(3);
+
+            hmm.Reverse();
             Console.WriteLine(hmm.Print());
         }
     }
